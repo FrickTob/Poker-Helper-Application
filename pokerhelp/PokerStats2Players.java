@@ -67,4 +67,49 @@ public class PokerStats2Players {
 		}
 		return numWins / numIterations;
 	}
+	
+	public static float winningOddsGivenFlop(PokerHand hand, PokerCard flop1, PokerCard flop2, PokerCard flop3) {
+		ArrayList<PokerCard> remainingCards = new ArrayList<>();
+		for(int i = 0; i < AllCards.NUMCARDS; i++)
+			remainingCards.add(AllCards.getCard(i));
+		remainingCards.remove(hand.getCard1());
+		remainingCards.remove(hand.getCard2());
+		remainingCards.remove(flop1);
+		remainingCards.remove(flop2);
+		remainingCards.remove(flop3);
+		
+		float sumOfAverages = 0;
+		int numTables = 0;
+		int numCards = remainingCards.size();
+		
+		for(int turnIndex = 0; turnIndex < numCards; turnIndex++) {
+			sumOfAverages += winningOddsGivenTurn(hand, flop1, flop2, flop3, remainingCards.get(turnIndex));
+			numTables++;
+		}
+		return sumOfAverages / numTables;
+	}
+	
+	public static float winningOddsGivenTurn(PokerHand hand, PokerCard flop1, PokerCard flop2, PokerCard flop3, PokerCard turn) {
+		ArrayList<PokerCard> remainingCards = new ArrayList<>();
+		for(int i = 0; i < AllCards.NUMCARDS; i++)
+			remainingCards.add(AllCards.getCard(i));
+		remainingCards.remove(hand.getCard1());
+		remainingCards.remove(hand.getCard2());
+		remainingCards.remove(flop1);
+		remainingCards.remove(flop2);
+		remainingCards.remove(flop3);
+		remainingCards.remove(turn);
+		
+		
+		float sumOfAverages = 0;
+		int numTables = 0;
+		int numCards = remainingCards.size();
+		
+		for(int riverIndex = 0; riverIndex < numCards; riverIndex++) {
+			PokerTable currTable = new PokerTable(flop1, flop2, flop3, turn, remainingCards.get(riverIndex));
+			sumOfAverages += winningOddsGivenTable(hand, currTable);
+			numTables++;
+		}
+		return sumOfAverages / numTables;
+	}
 }
