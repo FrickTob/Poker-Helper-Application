@@ -16,13 +16,16 @@ import pokerParts.PokerHand;
 import pokerParts.PokerTable;
 import pokerhelp.PokerStats2Players;
 
-public class mainGUI {
+public class MainGUI {
 
 	protected Shell shell;
 	private Text txtenterHandHere;
 	private Text txtEnterTableCards;
 	private Label lblWinningOdds;
 	private Label lblOdds;
+	private Label lblErrorLine1;
+	private Label lblErrorLine2;
+	private Label lblErrorLine3;
 
 	/**
 	 * Launch the application.
@@ -30,7 +33,7 @@ public class mainGUI {
 	 */
 	public static void main(String[] args) {
 		try {
-			mainGUI window = new mainGUI();
+			MainGUI window = new MainGUI();
 			window.open();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -74,9 +77,20 @@ public class mainGUI {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if(e.getSource().equals(btnPress)) {
-					if(txtenterHandHere.getText().length() != 4) {
+					if(!InputFormatting.isProperlyFormattedHand(txtenterHandHere.getText())) {
+						lblErrorLine1.setText("Invalid Hand Format");
 						System.out.println("Invalid Hand Format");
-						System.out.println("Example Hand \"ACAS\" (Ace of Clubs Ace of Spades)");
+						lblErrorLine2.setText("Example Hand: AC0H");
+						System.out.println("Example Hand: AC0H");
+						lblErrorLine3.setText("Ace of Clubs 10 of Hearts");
+						System.out.println("Ace of Clubs 10 of Hearts");
+						return;
+					}
+					if(!InputFormatting.isProperlyFormattedTable(txtEnterTableCards.getText())) {
+						System.out.println("Invalid Table Format");
+						System.out.println("Example Table: AC4S7D6H9C");
+						System.out.println("Ace of Clubs, 4 of Spades, 7 of Diamonds... etc");
+						return;
 					}
 				else {
 					switch (txtEnterTableCards.getText().length()) {
@@ -92,10 +106,6 @@ public class mainGUI {
 							setOddsWithRiver();
 							break;
 						}
-						default : {
-							System.out.println("Invalid Table Format");
-							System.out.println("Example Hand \"ACASAD\"");
-						}
 					}
 				}
 			}
@@ -109,10 +119,22 @@ public class mainGUI {
 		
 		lblWinningOdds = new Label(shell, SWT.NONE);
 		lblWinningOdds.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		lblWinningOdds.setText("Winning Odds");
+		lblWinningOdds.setText("Winning Odds:");
 		
 		lblOdds = new Label(shell, SWT.NONE);
-		lblOdds.setText("Odds");
+		lblOdds.setText("     ");
+		
+		lblErrorLine1 = new Label(shell, SWT.NONE);
+		lblErrorLine1.setText("                                                               ");
+		new Label(shell, SWT.NONE);
+		
+		lblErrorLine2 = new Label(shell, SWT.NONE);
+		lblErrorLine2.setText("                                                               ");
+		new Label(shell, SWT.NONE);
+		
+		lblErrorLine3 = new Label(shell, SWT.NONE);
+		lblErrorLine3.setText("                                                               ");
+		new Label(shell, SWT.NONE);
 		
 
 	}
