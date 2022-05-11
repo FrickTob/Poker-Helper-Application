@@ -14,7 +14,7 @@ import org.eclipse.swt.widgets.Text;
 import pokerParts.AllCards;
 import pokerParts.PokerHand;
 import pokerParts.PokerTable;
-import pokerhelp.PokerStats2Players;
+import pokerhelp.Stats2Player;
 
 public class MainGUI {
 
@@ -26,6 +26,7 @@ public class MainGUI {
 	private Label lblErrorLine1;
 	private Label lblErrorLine2;
 	private Label lblErrorLine3;
+	
 
 	/**
 	 * Launch the application.
@@ -60,12 +61,12 @@ public class MainGUI {
 	 */
 	protected void createContents() {
 		shell = new Shell();
-		shell.setSize(450, 300);
+		shell.setSize(550, 300);
 		shell.setText("Poker Helper");
 		shell.setLayout(new GridLayout(2, false));
 		
 		Label lblEnterHandas = new Label(shell, SWT.NONE);
-		lblEnterHandas.setText("Enter Hand and Community Cards (AS = Ace of Spades)");
+		lblEnterHandas.setText("Enter Hand and Community Cards Ex: ASAC (AS = Ace of Spades)");
 		new Label(shell, SWT.NONE);
 		
 		txtenterHandHere = new Text(shell, SWT.BORDER);
@@ -143,8 +144,8 @@ public class MainGUI {
 	public void setOddsWithFlop() {
 		String handText = txtenterHandHere.getText();
 		String tableText = txtEnterTableCards.getText();
-		
-		float winPercent = PokerStats2Players.winningOddsGivenFlop(new PokerHand(AllCards.getCard(handText.charAt(0), handText.charAt(1)),
+		Stats2Player stats = new Stats2Player();
+		float winPercent = stats.winningOddsGivenFlop(new PokerHand(AllCards.getCard(handText.charAt(0), handText.charAt(1)),
 																				 AllCards.getCard(handText.charAt(2), handText.charAt(3))),
 																	AllCards.getCard(tableText.charAt(0), tableText.charAt(1)), 
 																	AllCards.getCard(tableText.charAt(2), tableText.charAt(3)), 
@@ -156,8 +157,8 @@ public class MainGUI {
 	public void setOddsWithTurn() {
 		String handText = txtenterHandHere.getText();
 		String tableText = txtEnterTableCards.getText();
-		
-		float winPercent = PokerStats2Players.winningOddsGivenTurn(new PokerHand(AllCards.getCard(handText.charAt(0), handText.charAt(1)),
+		Stats2Player stats = new Stats2Player();
+		float winPercent = stats.winningOddsGivenTurn(new PokerHand(AllCards.getCard(handText.charAt(0), handText.charAt(1)),
 																				 AllCards.getCard(handText.charAt(2), handText.charAt(3))),
 																	AllCards.getCard(tableText.charAt(0), tableText.charAt(1)), 
 																	AllCards.getCard(tableText.charAt(2), tableText.charAt(3)), 
@@ -170,13 +171,14 @@ public class MainGUI {
 	public void setOddsWithRiver() {
 		String handText = txtenterHandHere.getText();
 		String tableText = txtEnterTableCards.getText();
+		Stats2Player stats = new Stats2Player();
 		PokerTable table = new PokerTable(AllCards.getCard(tableText.charAt(0), tableText.charAt(1)),
 										  AllCards.getCard(tableText.charAt(2), tableText.charAt(3)),
 										  AllCards.getCard(tableText.charAt(4), tableText.charAt(5)),
 										  AllCards.getCard(tableText.charAt(6), tableText.charAt(7)),
 										  AllCards.getCard(tableText.charAt(8), tableText.charAt(9)));
 		
-		float winPercent = PokerStats2Players.winningOddsGivenTable(new PokerHand(AllCards.getCard(handText.charAt(0), handText.charAt(1)),
+		float winPercent = stats.winningOddsGivenTable(new PokerHand(AllCards.getCard(handText.charAt(0), handText.charAt(1)),
 																				 AllCards.getCard(handText.charAt(2), handText.charAt(3))),
 																		table);
 		System.out.println(winPercent);

@@ -6,8 +6,7 @@ import pokerParts.PokerHand;
 import pokerParts.PokerTable;
 
 public class AnalyzeHand {
-	private PokerHand hand;
-	private PokerTable table;
+
 	private String handAndTable;
 	private ArrayList<Character> values;
 	private ArrayList<Character> suits;
@@ -16,8 +15,7 @@ public class AnalyzeHand {
 	public AnalyzeHand(PokerHand hand, PokerTable table) {
 		this.values = new ArrayList<>();
 		this.suits = new ArrayList<>();	
-		this.hand = hand;
-		this.table = table;
+
 		
 		handAndTable = "" + hand.getCard1().getCard() + hand.getCard2().getCard() 
 				+ table.getFlop1().getCard() + table.getFlop2().getCard() + table.getFlop3().getCard()
