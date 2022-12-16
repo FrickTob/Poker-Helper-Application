@@ -1,6 +1,6 @@
 # Poker-Helper-Application
 
-UPDATE: I have since transitioned this project into an android application available on the google play store. and have created a new repository for that project.
+**UPDATE:** I have since transitioned this project into an android application available on the google play store. and have created a new repository for that project.
 
 This is an ongoing project by myself to build a GUI to help people calculate odds of having a winning hand in poker.<br>
 
